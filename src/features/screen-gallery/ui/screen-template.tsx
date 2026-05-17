@@ -1,15 +1,12 @@
 import Link from "next/link";
-import { screenById, taskboardScreens, type ScreenId } from "./taskboard-screens";
+import type { ScreenPage } from "../domain/screen";
 
 type ScreenTemplateProps = {
-  screenId: ScreenId;
+  screenPage: ScreenPage;
 };
 
-export function ScreenTemplate({ screenId }: ScreenTemplateProps) {
-  const screen = screenById[screenId];
-  const currentIndex = taskboardScreens.findIndex((item) => item.id === screenId);
-  const previous = taskboardScreens[currentIndex - 1];
-  const next = taskboardScreens[currentIndex + 1];
+export function ScreenTemplate({ screenPage }: ScreenTemplateProps) {
+  const { screen, previousHref, nextHref } = screenPage;
 
   return (
     <main className="relative min-h-screen overflow-hidden px-4 py-6 sm:px-6 lg:px-8">
@@ -32,16 +29,16 @@ export function ScreenTemplate({ screenId }: ScreenTemplateProps) {
             </p>
           </div>
           <nav className="flex flex-wrap gap-2 text-sm font-semibold" aria-label="Screen navigation">
-            {previous ? (
-              <Link className="rounded-full border border-white/10 bg-white/[.03] px-4 py-2 text-slate-200 transition hover:border-cyan-300/40 hover:text-cyan-100" href={previous.route.replace('[boardId]', 'portfolio').replace('[taskId]', 'launch-checklist')}>
+            {previousHref ? (
+              <Link className="rounded-full border border-white/10 bg-white/[.03] px-4 py-2 text-slate-200 transition hover:border-cyan-300/40 hover:text-cyan-100" href={previousHref}>
                 Previous
               </Link>
             ) : null}
             <Link className="rounded-full border border-cyan-300/20 bg-cyan-300/10 px-4 py-2 text-cyan-100 transition hover:border-cyan-300/40" href="/boards">
               Boards
             </Link>
-            {next ? (
-              <Link className="rounded-full bg-cyan-300 px-4 py-2 text-slate-950 transition hover:bg-cyan-200" href={next.route.replace('[boardId]', 'portfolio').replace('[taskId]', 'launch-checklist')}>
+            {nextHref ? (
+              <Link className="rounded-full bg-cyan-300 px-4 py-2 text-slate-950 transition hover:bg-cyan-200" href={nextHref}>
                 Next
               </Link>
             ) : null}

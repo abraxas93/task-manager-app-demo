@@ -1,5 +1,5 @@
-import { ScreenTemplate } from "@/app/screen-template";
+import { renderScreenPage } from "@/app/_shared/render-screen-page";
 
 export default function NotFound() {
-  return <ScreenTemplate screenId="24" />;
+  return renderScreenPage("24");
 }
