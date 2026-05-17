@@ -1,5 +1,6 @@
-import Link from "next/link";
+import { LinkButton } from "@/shared/ui";
 import type { ScreenPage } from "../domain/screen";
+import { screenRenderers } from "./screen-renders";
 
 type ScreenTemplateProps = {
   screenPage: ScreenPage;
@@ -7,6 +8,7 @@ type ScreenTemplateProps = {
 
 export function ScreenTemplate({ screenPage }: ScreenTemplateProps) {
   const { screen, previousHref, nextHref } = screenPage;
+  const ScreenRender = screenRenderers[screen.id] ?? MissingScreenRender;
 
   return (
     <main className="relative min-h-screen overflow-hidden px-4 py-6 sm:px-6 lg:px-8">
@@ -30,27 +32,38 @@ export function ScreenTemplate({ screenPage }: ScreenTemplateProps) {
           </div>
           <nav className="flex flex-wrap gap-2 text-sm font-semibold" aria-label="Screen navigation">
             {previousHref ? (
-              <Link className="rounded-full border border-white/10 bg-white/[.03] px-4 py-2 text-slate-200 transition hover:border-cyan-300/40 hover:text-cyan-100" href={previousHref}>
+              <LinkButton href={previousHref}>
                 Previous
-              </Link>
+              </LinkButton>
             ) : null}
-            <Link className="rounded-full border border-cyan-300/20 bg-cyan-300/10 px-4 py-2 text-cyan-100 transition hover:border-cyan-300/40" href="/boards">
+            <LinkButton href="/boards" variant="accent">
               Boards
-            </Link>
+            </LinkButton>
             {nextHref ? (
-              <Link className="rounded-full bg-cyan-300 px-4 py-2 text-slate-950 transition hover:bg-cyan-200" href={nextHref}>
+              <LinkButton href={nextHref} variant="primary">
                 Next
-              </Link>
+              </LinkButton>
             ) : null}
           </nav>
         </header>
 
         <div className="preview-window rounded-[1.5rem] border border-white/10 p-3 sm:p-4">
           <div className="min-h-[calc(100vh-11rem)] rounded-[1.15rem] border border-white/10 bg-grid p-4 sm:p-6">
-            <div dangerouslySetInnerHTML={{ __html: screen.template }} />
+            <ScreenRender />
           </div>
         </div>
       </section>
     </main>
+  );
+}
+
+function MissingScreenRender() {
+  return (
+    <div className="mx-auto max-w-lg rounded-[1.5rem] border border-amber-300/20 bg-slate-950/90 p-6 text-center">
+      <h3 className="text-xl font-semibold text-white">Screen mock unavailable</h3>
+      <p className="mt-2 text-sm leading-6 text-slate-400">
+        This placeholder keeps the route renderable until the feature mock is added.
+      </p>
+    </div>
   );
 }

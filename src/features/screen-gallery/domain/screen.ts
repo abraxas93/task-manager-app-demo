@@ -33,7 +33,6 @@ export type TaskboardScreen = {
   group: string;
   sourceRoute: string;
   route: string;
-  template: string;
 };
 
 export type ScreenPage = {

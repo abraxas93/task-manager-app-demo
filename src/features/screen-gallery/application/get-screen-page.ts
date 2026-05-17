@@ -41,7 +41,5 @@ function createMissingScreenStub(screenId: ScreenId): TaskboardScreen {
     group: "state",
     sourceRoute: "Mock fallback",
     route: "/",
-    template:
-      '<div class="mx-auto max-w-lg rounded-[1.5rem] border border-amber-300/20 bg-slate-950/90 p-6 text-center"><h3 class="text-xl font-semibold text-white">Screen mock unavailable</h3><p class="mt-2 text-sm leading-6 text-slate-400">This placeholder keeps the route renderable until the feature mock is added.</p></div>',
   };
 }
