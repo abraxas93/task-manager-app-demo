@@ -1,4 +1,4 @@
-import { LinkButton } from "@/shared/ui";
+import { LinkButton, Surface } from "@/shared/ui";
 import type { ScreenPage } from "../domain/screen";
 import { screenRenderers } from "./screen-renders";
 
@@ -18,7 +18,12 @@ export function ScreenTemplate({ screenPage }: ScreenTemplateProps) {
       />
 
       <section className="relative z-10 mx-auto max-w-7xl">
-        <header className="mb-5 flex flex-col gap-4 rounded-2xl border border-white/10 bg-slate-950/80 p-4 backdrop-blur-xl sm:flex-row sm:items-center sm:justify-between">
+        <Surface
+          as="header"
+          className="mb-5 flex flex-col gap-4 rounded-2xl backdrop-blur-xl sm:flex-row sm:items-center sm:justify-between"
+          padding="sm"
+          variant="panel"
+        >
           <div>
             <p className="text-xs font-semibold uppercase tracking-[.26em] text-cyan-200">
               Screen {screen.id} · {screen.group}
@@ -45,13 +50,13 @@ export function ScreenTemplate({ screenPage }: ScreenTemplateProps) {
               </LinkButton>
             ) : null}
           </nav>
-        </header>
+        </Surface>
 
-        <div className="preview-window rounded-[1.5rem] border border-white/10 p-3 sm:p-4">
+        <Surface className="sm:p-4" padding="xs" variant="preview">
           <div className="min-h-[calc(100vh-11rem)] rounded-[1.15rem] border border-white/10 bg-grid p-4 sm:p-6">
             <ScreenRender />
           </div>
-        </div>
+        </Surface>
       </section>
     </main>
   );
@@ -59,11 +64,11 @@ export function ScreenTemplate({ screenPage }: ScreenTemplateProps) {
 
 function MissingScreenRender() {
   return (
-    <div className="mx-auto max-w-lg rounded-[1.5rem] border border-amber-300/20 bg-slate-950/90 p-6 text-center">
+    <Surface className="mx-auto max-w-lg border-amber-300/20 bg-slate-950/90 text-center" padding="lg">
       <h3 className="text-xl font-semibold text-white">Screen mock unavailable</h3>
       <p className="mt-2 text-sm leading-6 text-slate-400">
         This placeholder keeps the route renderable until the feature mock is added.
       </p>
-    </div>
+    </Surface>
   );
 }
