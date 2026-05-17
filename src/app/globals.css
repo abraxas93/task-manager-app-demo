@@ -1,8 +1,14 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #020617;
+  --foreground: #f8fafc;
+  --bg: #020617;
+  --panel: #0b1220;
+  --line: rgba(148, 163, 184, .14);
+  --cyan: #06b6d4;
+  --violet: #6d5dfc;
+  --muted: #94a3b8;
 }
 
 @theme inline {
@@ -12,15 +18,150 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+body {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 15% 0%, rgba(34, 211, 238, .14), transparent 34rem),
+    radial-gradient(circle at 88% 8%, rgba(109, 93, 252, .20), transparent 28rem),
+    linear-gradient(180deg, #050816 0%, #020617 45%, #020617 100%);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.bg-grid {
+  background-image:
+    linear-gradient(to right, rgba(148, 163, 184, .10) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(148, 163, 184, .10) 1px, transparent 1px);
+  background-size: 4.5rem 4.5rem;
+}
+
+.bg-fine-grid {
+  background-image:
+    linear-gradient(to right, rgba(148, 163, 184, .09) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(148, 163, 184, .09) 1px, transparent 1px);
+  background-size: 2.25rem 2.25rem;
+}
+
+.bg-diagonal {
+  background-image: repeating-linear-gradient(135deg, rgba(148, 163, 184, .13) 0 1px, transparent 1px 9px);
+}
+
+.glass {
+  background: linear-gradient(180deg, rgba(15, 23, 42, .92), rgba(2, 6, 23, .80));
+  border: 1px solid rgba(148, 163, 184, .18);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .04), 0 24px 80px rgba(0, 0, 0, .35);
+}
+
+.card-glow {
+  position: relative;
+  isolation: isolate;
+}
+
+.card-glow::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  z-index: -1;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(34, 211, 238, .22), transparent 34%, rgba(109, 93, 252, .28));
+  opacity: 0;
+  transition: opacity .25s ease;
+}
+
+.card-glow:hover::before {
+  opacity: 1;
+}
+
+.preview-window {
+  background:
+    linear-gradient(180deg, rgba(15, 23, 42, .96), rgba(15, 23, 42, .68)),
+    linear-gradient(to right, rgba(148, 163, 184, .10) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(148, 163, 184, .10) 1px, transparent 1px);
+  background-size: auto, 4rem 4rem, 4rem 4rem;
+}
+
+.noise::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: .055;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
+}
+
+.field {
+  width: 100%;
+  border-radius: .85rem;
+  border: 1px solid rgba(255, 255, 255, .10);
+  background: rgba(2, 6, 23, .72);
+  padding: .65rem .8rem;
+  color: white;
+  outline: none;
+  box-shadow: 0 0 0 0 rgba(34, 211, 238, 0);
+}
+
+.field::placeholder {
+  color: rgb(71 85 105);
+}
+
+.field:focus {
+  border-color: rgba(103, 232, 249, .55);
+  box-shadow: 0 0 0 4px rgba(34, 211, 238, .12);
+}
+
+.task-card {
+  border-radius: 1rem;
+  border: 1px solid rgba(255, 255, 255, .10);
+  background: rgba(2, 6, 23, .74);
+  padding: .9rem;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .03);
+}
+
+.tag-cyan,
+.tag-violet,
+.tag-amber {
+  border-radius: 999px;
+  padding: .22rem .55rem;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+}
+
+.tag-cyan {
+  background: rgba(34, 211, 238, .10);
+  color: #a5f3fc;
+  border: 1px solid rgba(103, 232, 249, .20);
+}
+
+.tag-violet {
+  background: rgba(139, 92, 246, .12);
+  color: #ddd6fe;
+  border: 1px solid rgba(196, 181, 253, .20);
+}
+
+.tag-amber {
+  background: rgba(251, 191, 36, .10);
+  color: #fde68a;
+  border: 1px solid rgba(251, 191, 36, .20);
+}
+
+.loader {
+  animation: spin .8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: .001ms !important;
+    transition-duration: .001ms !important;
+  }
 }

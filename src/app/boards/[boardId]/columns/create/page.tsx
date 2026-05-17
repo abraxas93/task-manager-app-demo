@@ -1,5 +1,5 @@
 import { ScreenTemplate } from "@/app/screen-template";
 
 export default function Page() {
-  return <ScreenTemplate screenId="01" />;
+  return <ScreenTemplate screenId="10" />;
 }
